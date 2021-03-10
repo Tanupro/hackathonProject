@@ -3,6 +3,8 @@ package com.hackathon.insurance.base;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -15,6 +17,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.asserts.SoftAssert;
@@ -133,6 +136,11 @@ public class BasicAutomation {
 				element = driver.findElement(By.cssSelector(prop.getProperty(locatorKey)));
 				logger.log(Status.INFO,"Locator identified "+ locatorKey );
 			}
+			 
+			else if(locatorKey.endsWith("_Name")) {
+				element = driver.findElement(By.name(prop.getProperty(locatorKey)));
+				logger.log(Status.INFO,"Locator identified "+ locatorKey );
+			}
 			else {
 				reportFail("Failing the test case invalid locator: " + locatorKey);
 			}
@@ -147,6 +155,60 @@ public class BasicAutomation {
 		}
 		return element;
 	}
+	
+	//Get Multiple Elements
+	
+	public List<WebElement> getElementsList(String locatorKey) {
+		List<WebElement> element = new ArrayList<WebElement>();
+		try {
+			if(locatorKey.endsWith("_Id")) {
+				element = driver.findElements(By.id(prop.getProperty(locatorKey)));
+				logger.log(Status.INFO,"Locator identified "+ locatorKey );
+			}
+			
+			else if(locatorKey.endsWith("_Xpath")) {
+				element = driver.findElements(By.xpath(prop.getProperty(locatorKey)));
+				logger.log(Status.INFO,"Locator identified "+ locatorKey );
+			}
+			
+			else if(locatorKey.endsWith("_CSS")) {
+				element = driver.findElements(By.cssSelector(prop.getProperty(locatorKey)));
+				logger.log(Status.INFO,"Locator identified "+ locatorKey );
+			}
+			
+			else if(locatorKey.endsWith("_Name")) {
+				element = driver.findElements(By.name(prop.getProperty(locatorKey)));
+				logger.log(Status.INFO,"Locator identified "+ locatorKey );
+			}
+			else {
+				reportFail("Failing the test case invalid locator: " + locatorKey);
+			}
+		}
+		catch (Exception e) {
+			
+			// Fail the TestCase and Report the error
+			reportFail(e.getMessage());
+			e.printStackTrace();
+			
+			Assert.fail("Test case failed"+e.getMessage());
+		}
+		return element;
+	}
+	/******************************************* SELECT ELEMENT ***********************************************/
+	///SELECT by visible text
+	public void selectElementByText(String locatorKey, String textValue) {
+		Select select = null;
+		select = new Select(getElement(locatorKey));
+		select.selectByVisibleText(textValue);
+	}
+	
+	///Select by Index
+	public void selectElementByIndex(String locatorKey, int index) {
+		Select select = null;
+		select = new Select(getElement(locatorKey));
+		select.selectByIndex(index);
+	}
+	
 	/******************************************* VERIFY ELEMENT ***********************************************/
 	public boolean isElementPresent(String locatorKey) {
 		try {
