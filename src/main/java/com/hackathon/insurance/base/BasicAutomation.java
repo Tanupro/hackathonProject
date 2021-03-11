@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -92,6 +94,10 @@ public class BasicAutomation {
 		driver.close();
 	}
 	
+	/********************************************* Wait ******************************************************/
+	public void addWait(long seconds) {
+		driver.manage().timeouts().implicitlyWait(seconds, TimeUnit.SECONDS);
+	}
 	/********************************************* Quit Browser ******************************************************/
 	public void quitBrowser() {
 		driver.quit();
@@ -107,6 +113,16 @@ public class BasicAutomation {
 			reportFail(e.getMessage());
 		}
 	}
+	public void enterKey(String xpathKey) {
+		try {
+			
+			getElement(xpathKey).sendKeys(Keys.ENTER);
+			reportPass("Entered successfully in locator element : " + xpathKey);
+		}
+		catch(Exception e) {
+			reportFail(e.getMessage());
+		}
+	}
 	/********************************************* Element Click ******************************************************/
 	public void elementClick(String xpathKey) {
 		try {
@@ -117,6 +133,14 @@ public class BasicAutomation {
 			reportFail(e.getMessage());
 		}
 	}
+	
+	/********************************************* JavaScript Executor ******************************************************/
+	public void getByJavascript(String locatorKey) {
+		JavascriptExecutor jse = (JavascriptExecutor)driver;
+		WebElement jsElement = getElement(locatorKey); 
+		jse.executeScript("arguments[0].click()",jsElement);
+	}
+	
 	
 	/********************************************* Get Element ******************************************************/
 	public WebElement getElement(String locatorKey) {
@@ -142,6 +166,7 @@ public class BasicAutomation {
 				logger.log(Status.INFO,"Locator identified "+ locatorKey );
 			}
 			else {
+				System.out.println("Not Found");
 				reportFail("Failing the test case invalid locator: " + locatorKey);
 			}
 		}

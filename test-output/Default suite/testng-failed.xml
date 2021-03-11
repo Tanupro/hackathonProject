@@ -3,13 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.datadriven.framework.test.LoginTest.loginTest">
+      <class name="com.hackathon.insurance.tests.TestScenarioOne">
         <methods>
-          <include name="testOne"/>
-          <include name="afterTest"/>
           <include name="endReport"/>
+          <include name="afterTest"/>
+          <include name="testCaseOne"/>
         </methods>
-      </class> <!-- com.datadriven.framework.test.LoginTest.loginTest -->
+      </class> <!-- com.hackathon.insurance.tests.TestScenarioOne -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

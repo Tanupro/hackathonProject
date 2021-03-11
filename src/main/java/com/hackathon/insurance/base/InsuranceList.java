@@ -13,9 +13,9 @@ public class InsuranceList extends BasicAutomation {
 	
 	public void selectTopThree() {
 		List<WebElement> lowestPrice = getElementsList("priceList_Xpath"); 
-		for (Iterator iterator = lowestPrice.iterator(); iterator.hasNext();) {
+		for (Iterator<WebElement> iterator = lowestPrice.iterator(); iterator.hasNext();) {
 			WebElement webElement = (WebElement) iterator.next();
-			webElement.getText();
+			System.out.println(webElement.getText());
 			
 		}
 	}
