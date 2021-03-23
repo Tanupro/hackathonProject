@@ -1,5 +1,6 @@
 package com.hackathon.insurance.utils;
 
+
 import java.util.Date;
 
 public class DateUtils {
@@ -15,4 +16,5 @@ public class DateUtils {
 		Date date = new Date();
 		return date.toString().replaceAll(":", "_").replaceAll(" ", "_");
 	}
+	
 }

@@ -3,10 +3,17 @@ package com.hackathon.insurance.base;
 import java.util.Iterator;
 import java.util.List;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class InsuranceList extends BasicAutomation {
+import com.aventstack.extentreports.ExtentTest;
+
+public class InsuranceList extends PageBaseClass {
 	
+	public InsuranceList(WebDriver driver, ExtentTest logger) {
+		super(driver, logger);
+	}
+
 	public void sortList() {
 		selectElementByText("sortList_Xpath","Price: Low to High");
 	}

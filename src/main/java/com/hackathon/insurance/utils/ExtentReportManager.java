@@ -11,7 +11,7 @@ public class ExtentReportManager {
 	public static ExtentReports getReportInstance() {
 		if( report == null) {
 			String filename = DateUtils.dateFormatstamp() + ".html";
-			ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir")+"\\test-output\\"+filename);
+			ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir")+"\\test-output\\test-reports\\"+filename);
 			report = new ExtentReports();
 			report.attachReporter(htmlReporter);
 			

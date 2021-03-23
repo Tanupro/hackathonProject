@@ -3,13 +3,11 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="com.hackathon.insurance.tests.TestScenarioOne">
+      <class name="com.hackathon.insurance.tests.TestClass">
         <methods>
-          <include name="endReport"/>
-          <include name="afterTest"/>
           <include name="testCaseOne"/>
         </methods>
-      </class> <!-- com.hackathon.insurance.tests.TestScenarioOne -->
+      </class> <!-- com.hackathon.insurance.tests.TestClass -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
