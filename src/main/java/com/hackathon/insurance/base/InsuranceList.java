@@ -19,11 +19,18 @@ public class InsuranceList extends PageBaseClass {
 	}
 	
 	public void selectTopThree() {
-		List<WebElement> lowestPrice = getElementsList("priceList_Xpath"); 
-		for (Iterator<WebElement> iterator = lowestPrice.iterator(); iterator.hasNext();) {
-			WebElement webElement = (WebElement) iterator.next();
-			System.out.println(webElement.getText());
-			
+		List<WebElement> lowestPrice = getElementsList("priceList_Xpath");
+		List<WebElement> insuranceProvider = getElementsList("companyList_Xpath"); 
+		Iterator<WebElement> priceIterator = lowestPrice.iterator();
+		Iterator<WebElement> providerIterator = insuranceProvider.iterator();
+		while (priceIterator.hasNext() && providerIterator.hasNext()) {
+			WebElement priceElement = (WebElement) priceIterator.next();
+			WebElement providerElement = (WebElement) providerIterator.next();
+			System.out.print(providerElement.getAttribute("class").replace("Logo", ""));
+			System.out.print(" - "+priceElement.getText().replace("₹ ", ""));
+			System.out.println();
 		}
+		
+		
 	}
 }

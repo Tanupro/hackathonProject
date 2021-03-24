@@ -223,6 +223,8 @@ public class BasicAutomation {
 		}
 		return element;
 	}
+	
+	
 
 	/************************************************
 	 			VERIFY ELEMENT
@@ -259,7 +261,7 @@ public class BasicAutomation {
 		}
 		return false;
 	}
-	
+
 	/************************************************
 					After Methods
  	***********************************************/

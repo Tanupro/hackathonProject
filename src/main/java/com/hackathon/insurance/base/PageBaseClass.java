@@ -20,11 +20,13 @@ import org.testng.Assert;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.hackathon.insurance.utils.DateUtils;
+import com.hackathon.insurance.utils.ReadExcelFile;
 
 public class PageBaseClass extends BasicAutomation{
 
 	
 	public ExtentTest logger;
+	public ReadExcelFile excel;
 	
 	public PageBaseClass(WebDriver driver, ExtentTest logger) {
 		this.driver = driver;
@@ -64,7 +66,19 @@ public class PageBaseClass extends BasicAutomation{
 	}
 	
 	/****************************************************
-	 					SELECT ELEMENT
+	 					SELECT DATES
+	 ****************************************************/
+	public void selectCountrySearch( String country) {
+//		excel = new ReadExcelFile(System.getProperty("user-dir")+"\\test-output\\data-sheet.xlsx");
+		//String country = excel.getCellData("Input-data", colNum, rowNum);
+		enterText("countrySearch_Xpath",  country);
+		addWait(10);
+		String countryCapitalize = country.substring(0,1).toUpperCase() + country.substring(1);
+		driver.findElement(By.xpath(prop.getProperty("countrySelect_Xpath").replace("France",countryCapitalize))).click();
+		
+	}
+	/****************************************************
+	 					SELECT DATES
 	 ****************************************************/
 	public void selectDates(String startDate, String endDate) {
 		 try
@@ -139,9 +153,21 @@ public class PageBaseClass extends BasicAutomation{
 				reportFail(e.getMessage());
 			}
 	}
-	
-	
-	
+
+	/************************************************
+	 					VERIFY TITLE
+	 ***********************************************/
+	public void verifyPageTitle(String pageTitle) {
+		try {
+			String actualTitle = driver.getTitle();
+			logger.log(Status.INFO, "Actual Title is : " + actualTitle);
+			logger.log(Status.INFO, "Expected Title is : " + pageTitle);
+			Assert.assertEquals(actualTitle, pageTitle);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
 	/*********************************************** 
 	  					TEST REPORT 
 	 ***********************************************/
@@ -154,16 +180,15 @@ public class PageBaseClass extends BasicAutomation{
 		takeScreenShotOnFailure();
 		Assert.fail(reportString);
 	}
-	
-	
 	/*********************************************** 
-	 				Take Screenshot 
+					Take Screenshot 
 	 ***********************************************/
 	public void takeScreenShotOnFailure() {
 		TakesScreenshot takeScreenShot = (TakesScreenshot) driver;
 		File sourceFile = takeScreenShot.getScreenshotAs(OutputType.FILE);
 
-		File destFile = new File(System.getProperty("user.dir") + "\\ScreenShots\\" + DateUtils.dateFormatstamp() + ".png");
+		File destFile = new File(
+				System.getProperty("user.dir") + "\\ScreenShots\\" + DateUtils.dateFormatstamp() + ".png");
 		try {
 			FileUtils.copyFile(sourceFile, destFile);
 			logger.addScreenCaptureFromPath(
@@ -174,4 +199,7 @@ public class PageBaseClass extends BasicAutomation{
 		}
 
 	}
+	
+	
+	
 }
